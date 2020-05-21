@@ -1,0 +1,46 @@
+{
+  "event": {
+    "httpMethod": "",
+    "path": "",
+    "requestContext": {
+      "authorizer": {
+        "companyid": "",
+        "groupid": "",
+        "uuid": "",
+        "username": ""
+      }
+    },
+    "headers": {
+      "Host": ""
+    },
+    "body": "",
+    "queryStringParameters": ""
+  },
+  "response": {},
+  "email": "test@test.com",
+  "cardNumber": "1111222233334444",
+  "string": "string",
+  "object": {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+  },
+  "nestedObject": {
+    "a":"a",
+    "b":{
+       "c":"c",
+       "d":{
+          "e":"e",
+          "f":{
+             "g":"g",
+             "h":{
+                "i":"i"
+             }
+          }
+       }
+    }
+  },
+  "circularObject": {
+    "key1": "value1"
+  }
+}
