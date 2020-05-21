@@ -1,0 +1,14 @@
+.DS_Store
+
+# NPM Packages
+node_modules/
+
+# Unit Test
+.nyc_output/
+
+# Manual Test
+test.js
+
+# Settings
+.env
+.npmrc
