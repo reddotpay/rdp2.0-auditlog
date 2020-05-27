@@ -49,10 +49,10 @@ class RDPLog {
     let auditResponse;
 
     if (environment !== 'local') {
-      const productIndex = headers && headers.Host.indexOf('.api');
+      const productIndex = headers && headers.Host && headers.Host.indexOf('.api');
 
       auditResponse = {
-        product: headers && headers.Host.substr(0, productIndex),
+        product: headers && headers.Host && headers.Host.substr(0, productIndex),
         summary: `${httpMethod} ${path}`,
         createdAt: new Date().toUTCString(),
         sortDate: new Date().toJSON(),
