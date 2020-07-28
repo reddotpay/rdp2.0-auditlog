@@ -65,9 +65,10 @@ class RDPLog {
       httpMethod, requestContext, headers, body, queryStringParameters,
     } = event;
 
+    const pathParams = event.pathParameters || {};
     let { path } = event;
     if (typeof path === 'undefined' || !path) {
-      path = event.resource;
+      path = event.resource || '';
       Object.keys(pathParams).forEach((name) => {
         const param = pathParams[name];
         path = path.replace(`{${name}}`, param);
