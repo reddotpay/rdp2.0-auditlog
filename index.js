@@ -46,13 +46,44 @@ class RDPLog {
       httpMethod, path, requestContext, headers, body, queryStringParameters,
     } = event;
 
+    const productIndex = headers && headers.Host && headers.Host.indexOf('.api');
+    const product = headers && headers.Host && headers.Host.substr(0, productIndex);
+
+    this._audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response);
+  }
+
+  auditRdp2(product, event, response) {
+    const {
+      httpMethod, path, requestContext, headers, body, queryStringParameters,
+    } = event;
+
+    this._audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response);
+  }
+
+  auditRdp2Lambda(product, event, response) {
+    const {
+      httpMethod, requestContext, headers, body, queryStringParameters,
+    } = event;
+
+    let { path } = event;
+    if (typeof path === 'undefined' || !path) {
+      path = event.resource;
+      Object.keys(pathParams).forEach((name) => {
+        const param = pathParams[name];
+        path = path.replace(`{${name}}`, param);
+      });
+    }
+
+    this._audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response);
+  }
+
+  _audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response) {
+
     let auditResponse;
 
     if (environment !== 'local') {
-      const productIndex = headers && headers.Host && headers.Host.indexOf('.api');
-
       auditResponse = {
-        product: headers && headers.Host && headers.Host.substr(0, productIndex),
+        product,
         summary: `${httpMethod} ${path}`,
         createdAt: new Date().toUTCString(),
         sortDate: new Date().toJSON(),
@@ -102,7 +133,7 @@ class RDPLog {
 
   maskReturnDefault() {
     return '*'.repeat(16);
-  }  
+  }
 
   maskEmail(email) {
     const username = email.split('@')[0];
@@ -110,7 +141,7 @@ class RDPLog {
     const domain = email.split('@')[1];
 
     let maskedEmail = email;
-  
+
     if (username.length > 3) maskedEmail = `${firstThreeUsername}${'*'.repeat(username.length - 3)}@${domain}`;
 
     return maskedEmail;
@@ -136,7 +167,7 @@ class RDPLog {
       const objectKeys = Object.keys(object);
       objectKeys.forEach((key) => {
         object[key] = this.maskReturnDefault();
-      })      
+      })
     }
     return object;
   }

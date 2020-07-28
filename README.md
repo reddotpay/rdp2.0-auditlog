@@ -18,14 +18,14 @@ DISPLAY_AUDITLOG=true
 AWS Role can refer to *Policy* below.
 
 ##### Policy
-```
+```yaml
 BackendFunctionRole
 	Type: AWS::IAM::Role
 	Properties:
 		AssumeRolePolicyDocument:
 		Version: '2012-10-17'
 		Statement:
-		- 
+		-
 			Effect: Allow
 			Action:
 			- 'sts:AssumeRole'
@@ -39,7 +39,7 @@ BackendFunctionRole
 			PolicyDocument:
 				Version: '2012-10-17'
 				Statement:
-				- 
+				-
 					Effect: Allow
 					Action:
 					- 'logs:*'
@@ -49,7 +49,7 @@ BackendFunctionRole
 ### Usage
 
 #### Primary Function
-```
+```js
 /*
     DATA TYPE
     summmary {string} - description of log / error
@@ -74,14 +74,18 @@ exports.handler = (event) => {
     /*
         All the Lambda Routes
     */
+    const product = 'Product Name';
 
+    // use one of the below
     rdp.audit(event, response); <==== fn 3
+    rdp.auditRdp2(product, event, response); <==== for RDP 2 calls through API gateway
+    rdp.auditRdp2Lambda(product, event, response); <==== for RDP 2 direct lambda invocation
 
     return response;
 }
 ```
 
-```
+```js
 // models/test.js
 
 const axios = require('axios');
@@ -115,7 +119,7 @@ class test {
 ```
 
 ##### Response
-```
+```js
 {
   product: 'productName',
   summary: `${httpMethod} ${path}`,
@@ -144,7 +148,7 @@ class test {
 ```
 
 #### Masking Function
-```
+```js
 rdp.maskReturnDefault();
 rdp.maskEmail(email);
 rdp.maskCard(cardNumber);
@@ -153,7 +157,7 @@ rdp.maskObject(object);
 ```
 
 ##### Example
-```
+```js
 const maskReturnDefault = rdp.maskReturnDefault();
 // ****************
 remarks: default is always 16 asterisk
