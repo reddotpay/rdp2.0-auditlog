@@ -30,7 +30,7 @@ module.exports = {
     return caller;
   },
   formatError: (error) => {
-    if (error && typeof error === 'object') {
+    if (error && error instanceof Error) {
       return {
         name: error.name,
         message: error.message,
