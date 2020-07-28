@@ -1,6 +1,6 @@
 {
   "name": "@reddotpay/rdp2.0-auditlog",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Audit logger for RDP2.0 products",
   "main": "index.js",
   "scripts": {
