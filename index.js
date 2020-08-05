@@ -1,9 +1,11 @@
 const general = require('./modules/general');
 let { logArray } = require('./modules/logger');
-const { environment, displayAuditlog } = require('./config');
+const { ENVIRONMENT, DISPLAY_AUDITLOG, CONSOLE_LOG } = require('./config');
 
 class RDPLog {
   log(summary, variable) {
+    if (CONSOLE_LOG) console.log(summary, variable);
+
     const obj = {
       type: 'info',
       createdAt: new Date().toUTCString(),
@@ -23,6 +25,8 @@ class RDPLog {
   }
 
   error(summary, error) {
+    if (CONSOLE_LOG) console.log(summary, error);
+
     const obj = {
       type: 'error',
       createdAt: new Date().toUTCString(),
@@ -49,7 +53,7 @@ class RDPLog {
     const productIndex = headers && headers.Host && headers.Host.indexOf('.api');
     const product = headers && headers.Host && headers.Host.substr(0, productIndex);
 
-    this._audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response);
+    return this._audit(product, httpMethod, path, requestContext, headers, body, queryStringParameters, response);
   }
 
   auditRdp2(product, event, response) {
@@ -82,7 +86,7 @@ class RDPLog {
 
     let auditResponse;
 
-    if (environment !== 'local') {
+    if (ENVIRONMENT !== 'local') {
       auditResponse = {
         product,
         summary: `${httpMethod} ${path}`,
@@ -118,7 +122,7 @@ class RDPLog {
     }
 
     // Log to Cloudwatch
-    if (displayAuditlog === 'true') {
+    if (DISPLAY_AUDITLOG) {
       if (httpMethod === 'OPTIONS') {
         console.log(auditResponse.summary);
       } else {

@@ -10,6 +10,7 @@ const pathExist = (path) => {
 if (pathExist('dotenv')) require('dotenv').config();
 
 module.exports = {
-  environment: process.env.ENVIRONMENT,
-  displayAuditlog: process.env.DISPLAY_AUDITLOG,
+  ENVIRONMENT: process.env.ENVIRONMENT,
+  DISPLAY_AUDITLOG: process.env.DISPLAY_AUDITLOG === 'true',
+  CONSOLE_LOG: process.env.CONSOLE_LOG === 'true',
 };

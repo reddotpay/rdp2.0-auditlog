@@ -11,7 +11,8 @@ Audit log npm package for RDP2.0 products
 ##### Sample Environment File
 ```
 ENVIRONMENT=development | staging | production
-DISPLAY_AUDITLOG=true
+DISPLAY_AUDITLOG=true (To toggle auditlog in local)
+CONSOLE_LOG=true (To toggle console log for unit testing)
 ```
 
 ### Requirements
