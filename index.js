@@ -136,6 +136,11 @@ class RDPLog {
     return auditResponse;
   }
 
+  // empty logs
+  flush() {
+    logArray = [];
+  }
+
   maskReturnDefault() {
     return '*'.repeat(16);
   }
